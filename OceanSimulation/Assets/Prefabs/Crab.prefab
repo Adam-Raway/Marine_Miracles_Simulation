@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5841167688780031592}
   - component: {fileID: 8568951895440872098}
   - component: {fileID: 7001582261653687864}
-  - component: {fileID: 992500209305143359}
   - component: {fileID: 4094648500147984914}
   - component: {fileID: 1842454994674544460}
   m_Layer: 10
@@ -96,26 +95,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 0
-  sightRange: 10
+  sightRange: 7
   speed: 0.5
   rotationSpeed: 0.1
   ageOfMaturity: 1
   ageOfDeath: 5
---- !u!114 &992500209305143359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7920692828597285751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9922e9b1efccb0e4eb21ea46bcb3d224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tf: {fileID: 7394950745771354573}
-  rb: {fileID: 4094648500147984914}
-  stats: {fileID: 7001582261653687864}
+  deadMassPrefab: {fileID: 0}
 --- !u!54 &4094648500147984914
 Rigidbody:
   m_ObjectHideFlags: 0

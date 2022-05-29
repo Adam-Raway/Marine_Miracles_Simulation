@@ -3,24 +3,21 @@ using UnityEngine;
 
 public class KelpBehavior : MonoBehaviour
 {
-    private bool destroyKelpActive = false;
+    public GameObject deactivationAlertCollider;
+    public float health;
+    public int fishInContact;
 
-    private void OnTriggerEnter(Collider other)
+    private bool healthDepleted = false;
+
+    private void Update()
     {
-        Debug.Log("Eaten");
-        if (!destroyKelpActive && other.gameObject.layer > 9 && other.gameObject.layer < 13)
+        fishInContact = Mathf.Clamp(fishInContact, 0, 5);
+        if (healthDepleted) Destroy(gameObject);
+        health -= fishInContact * Time.deltaTime;
+        if (health <= 0 && !healthDepleted)
         {
-            StartCoroutine(destroyKelp());
-            destroyKelpActive = true;
+            deactivationAlertCollider.SetActive(true);
+            healthDepleted = true;
         }
-    }
-
-    IEnumerator destroyKelp()
-    {
-        yield return new WaitForSeconds(5f);
-        transform.position = new Vector3(-1000, -1000, -1000);
-
-        yield return null;
-        Destroy(gameObject);
     }
 }

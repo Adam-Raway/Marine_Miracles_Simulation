@@ -12,10 +12,9 @@ GameObject:
   - component: {fileID: 2756729272129928344}
   - component: {fileID: 118547020752963666}
   - component: {fileID: 1681265036714209929}
-  - component: {fileID: 2976821071049953339}
   - component: {fileID: 4346965159547281137}
-  - component: {fileID: 1985407807373071441}
-  - component: {fileID: 8498386388385442878}
+  - component: {fileID: 4287919974609359888}
+  - component: {fileID: 5065655308601344242}
   m_Layer: 12
   m_Name: Turtle
   m_TagString: Untagged
@@ -30,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920175643807902087}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -97,26 +96,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gender: 0
-  sightRange: 10
-  speed: 0.5
-  rotationSpeed: 0.1
+  sightRange: 7
+  speed: 0.7
+  rotationSpeed: 1
   ageOfMaturity: 8
   ageOfDeath: 25
---- !u!114 &2976821071049953339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920175643807902087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9922e9b1efccb0e4eb21ea46bcb3d224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tf: {fileID: 1291975913545052989}
-  rb: {fileID: 4346965159547281137}
-  stats: {fileID: 1681265036714209929}
+  deadMassPrefab: {fileID: 6846361565020064155, guid: 0999ad982c65e5742becd24786f97854,
+    type: 3}
+  selfSpeciesPrefab: {fileID: 1920175643807902087}
 --- !u!54 &4346965159547281137
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,14 +113,14 @@ Rigidbody:
   m_GameObject: {fileID: 1920175643807902087}
   serializedVersion: 2
   m_Mass: 5
-  m_Drag: 0.01
-  m_AngularDrag: 0.05
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1985407807373071441
+--- !u!65 &4287919974609359888
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,18 +131,21 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.28, z: 0.7}
-  m_Center: {x: 0, y: 0.04, z: 0.060000002}
---- !u!65 &8498386388385442878
-BoxCollider:
+  m_Size: {x: 1.1308756, y: 0.25561756, z: 1.0000008}
+  m_Center: {x: 0, y: 0.03884921, z: 0.24255408}
+--- !u!114 &5065655308601344242
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920175643807902087}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2, y: 0.28, z: 0.35}
-  m_Center: {x: 0, y: 0.04, z: 0.6}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38538d4cdd0398147976a5945dc6db37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tf: {fileID: 1291975913545052989}
+  rb: {fileID: 4346965159547281137}
+  stats: {fileID: 1681265036714209929}
+  confirmedMate: {fileID: 0}

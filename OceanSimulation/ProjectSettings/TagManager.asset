@@ -7,6 +7,8 @@ TagManager:
   - Food
   - Female
   - Male
+  - Deactivating
+  - Wall
   layers:
   - Default
   - TransparentFX
