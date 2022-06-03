@@ -101,9 +101,9 @@ MonoBehaviour:
   rotationSpeed: 1
   ageOfMaturity: 8
   ageOfDeath: 25
+  maxHunger: 60
   deadMassPrefab: {fileID: 6846361565020064155, guid: 0999ad982c65e5742becd24786f97854,
     type: 3}
-  selfSpeciesPrefab: {fileID: 1920175643807902087}
 --- !u!54 &4346965159547281137
 Rigidbody:
   m_ObjectHideFlags: 0

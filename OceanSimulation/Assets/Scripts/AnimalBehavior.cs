@@ -1,7 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEditor;
 
+/// <summary>
+/// A class that dictates the behavior of the animal object that it's attached to.
+/// It can perform actions such as eating, breeding, searching for various entities,
+/// and moving/wandering around. It has an AnimalStats script.
+/// </summary>
+
+[RequireComponent(typeof(AnimalStats))]
 public class AnimalBehavior : MonoBehaviour
 {
     public Transform tf;
@@ -17,6 +23,9 @@ public class AnimalBehavior : MonoBehaviour
     bool shouldBeDoingNothing = false;
     float doingNothingTimer;
     bool canEat = true;
+    float downBias;
+
+    int foodLayerMask = (1 << 8) | (1 << 9);
 
     delegate bool attemptToMate(GameObject potentialMate);
 
@@ -31,12 +40,13 @@ public class AnimalBehavior : MonoBehaviour
         {
             doingNothingTimer = 0;
             shouldBeDoingNothing = false;
+            confirmedMate.GetComponent<AnimalBehavior>().confirmedMate = null;
             confirmedMate = null;
         }
 
         if (numberOfFoodSearches >= 5)
         {
-            changeCurrentAction(moveToDestination(randomTargetLocation()));
+            changeCurrentAction(moveToDestination(randomTargetLocation(downBias: downBias)));
             numberOfFoodSearches = 0;
         }
         else if (!currentlyDoingSomething && !shouldBeDoingNothing)
@@ -54,8 +64,25 @@ public class AnimalBehavior : MonoBehaviour
 
         if (other.tag == "Food" && stats.hunger > 5 && canEat)
         {
-            other.GetComponent<KelpBehavior>().fishInContact++;
-            changeCurrentAction(eating(other.transform.position)); 
+            if (other.gameObject.layer == 8)
+            {
+                other.GetComponent<KelpBehavior>().fishInContact++;
+                changeCurrentAction(eating(other.transform.position));
+            } 
+            else if (other.gameObject.layer == 9)
+            {
+                if (Random.value >= 0.75)
+                {
+                    Debug.Log("this fish died to plastic poisoning");
+                    Destroy(other.gameObject);
+                    UniversalStats.Instance.totalNumOfPlastic--;
+                    stats.die();
+                }
+                else
+                {
+                    changeCurrentAction(eating(other.transform.position));
+                }
+            }
         }
         else if (other.tag == "Deactivating")
         {
@@ -67,7 +94,7 @@ public class AnimalBehavior : MonoBehaviour
     {
         if (other.tag == "Food")
         {
-            other.GetComponent<KelpBehavior>().fishInContact--;
+            if (other.gameObject.layer == 8) other.GetComponent<KelpBehavior>().fishInContact--;    
             changeCurrentAction(moveToDestination(randomTargetLocation(downBias: -0.25f, upBias: 2, horizontalBias: 2)));
             deactivateEating(3);
         }
@@ -104,6 +131,12 @@ public class AnimalBehavior : MonoBehaviour
         {
             Vector3 cp = collision.contacts[0].normal;
             changeCurrentAction(moveToDestination(tf.position + new Vector3(cp.x, 0.5f, cp.z)));
+        }
+        else if (collision.collider.tag == "Water")
+        {
+            Vector3 cp = collision.contacts[0].normal;
+            downBias = 12;
+            changeCurrentAction(moveToDestination(searchForEntity(foodLayerMask, "Food")));
         }
     }
 
@@ -211,7 +244,7 @@ public class AnimalBehavior : MonoBehaviour
 
             if (closestEntityDistance == 0)
             {
-                return randomTargetLocation();
+                return randomTargetLocation(downBias: downBias);
             }
 
             if (attemptToMate != null)
@@ -222,7 +255,7 @@ public class AnimalBehavior : MonoBehaviour
                 }
                 else
                 {
-                    return randomTargetLocation();
+                    return randomTargetLocation(downBias: downBias);
                 }
             }
 
@@ -231,7 +264,7 @@ public class AnimalBehavior : MonoBehaviour
         }
         else
         {
-            return randomTargetLocation();
+            return randomTargetLocation(downBias: downBias);
         }
 
     }
@@ -275,9 +308,9 @@ public class AnimalBehavior : MonoBehaviour
     Vector3 randomTargetLocation(float downBias = 1, float upBias = 1, float horizontalBias = 1)
     {
         return tf.position + new Vector3(
-            tf.forward.x + Random.Range(-2f * horizontalBias, 2f * horizontalBias),
-            tf.forward.y + Random.Range(-0.25f * downBias, 0.25f * upBias),
-            tf.forward.z + Random.Range(-2f * horizontalBias, 2f * horizontalBias)
+            tf.forward.x + Random.Range(-2f * horizontalBias, 2f * horizontalBias) / horizontalBias,
+            tf.forward.y + Random.Range(-0.25f * downBias, 0.25f * upBias) / ((downBias + upBias) * 0.5f),
+            tf.forward.z + Random.Range(-2f * horizontalBias, 2f * horizontalBias) / horizontalBias
             ).normalized * stats.sightRange;
     }
 
@@ -287,21 +320,23 @@ public class AnimalBehavior : MonoBehaviour
     /// </summary>
     void decideNextAction()
     {
+        downBias = ExtensionMethods.Map(stats.hunger, 0, 30, 1, 25);
+
         if (stats.hunger > 30)
         {
-            changeCurrentAction(moveToDestination(searchForEntity(1 << 8, "Food")));
+            changeCurrentAction(moveToDestination(searchForEntity(foodLayerMask, "Food")));
         }
-        else if (stats.reproductiveUrge >= 30 && gameObject.tag == "Male" && confirmedMate == null)
+        else if (stats.reproductiveUrge >= 15 && gameObject.tag == "Male" && confirmedMate == null)
         {
             changeCurrentAction(moveToDestination(searchForEntity(1 << gameObject.layer, "Female", tryToMate)));
         }
         else if (stats.hunger > 5)
         {
-            changeCurrentAction(moveToDestination(searchForEntity(1 << 8, "Food")));
+            changeCurrentAction(moveToDestination(searchForEntity(foodLayerMask, "Food")));
         }
         else
         {
-            changeCurrentAction(moveToDestination(randomTargetLocation()));
+            changeCurrentAction(moveToDestination(randomTargetLocation(downBias: downBias)));
         }
     }
 

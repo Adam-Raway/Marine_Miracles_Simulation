@@ -9,6 +9,8 @@ TagManager:
   - Male
   - Deactivating
   - Wall
+  - Water
+  - Decomposable
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - Crab
   - Salmon
   - Turtle
-  - 
+  - Dead Biomass
   - 
   - 
   - 
