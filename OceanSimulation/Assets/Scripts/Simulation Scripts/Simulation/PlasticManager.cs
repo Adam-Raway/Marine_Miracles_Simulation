@@ -62,7 +62,7 @@ public class PlasticManager : MonoBehaviour
             Instantiate(plasticPrefabs[prefabsIndex], randomSpawnPos, Quaternion.identity);
             prefabsIndex += 1;
             if (prefabsIndex >= plasticPrefabs.Count) prefabsIndex = 0;
+            UniversalManager.Instance.totalNumOfPlastic++;
         }
-        UniversalManager.Instance.totalNumOfPlastic++;
     }
 }

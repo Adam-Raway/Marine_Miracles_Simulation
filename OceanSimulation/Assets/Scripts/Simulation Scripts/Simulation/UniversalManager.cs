@@ -64,7 +64,7 @@ public class UniversalManager : MonoBehaviour
         yield return new WaitForSeconds(5);
 
         endScreenDeadFishMsg.text = $"In total, {numOfFishPoisoned} sea creatures died due to eating plastic. This number " +
-                $"doesn't include the fish" + $"that died indirectly because the plastic pollution decreased the amount of kelp.";
+                $"doesn't include the fish that died indirectly because the plastic pollution decreased the amount of kelp.";
         endScreenRecycledMsg.text = $"On the bright side, the System 002 cleaned up {numOfPlasticRecycled} pieces of plastic, " +
             $"saving many fish. And you could save even more fish in real life by donating or volunteering with its creators: " +
             $"The Ocean Cleanup Foundation.";

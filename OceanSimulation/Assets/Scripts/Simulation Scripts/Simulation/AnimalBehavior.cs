@@ -37,6 +37,8 @@ public class AnimalBehavior : MonoBehaviour
 
     private void Update()
     {
+        if (tf.position.y > 18.7) stats.die();
+
         if (shouldBeDoingNothing)
         {
             doingNothingTimer += Time.deltaTime;
@@ -140,7 +142,6 @@ public class AnimalBehavior : MonoBehaviour
         }
         else if (collision.collider.tag == "Water")
         {
-            Vector3 cp = collision.contacts[0].normal;
             downBias = 12;
             changeCurrentAction(moveToDestination(searchForEntity(foodLayerMask, "Food")));
         }
@@ -325,7 +326,7 @@ public class AnimalBehavior : MonoBehaviour
     /// </summary>
     void decideNextAction()
     {
-        downBias = ExtensionMethods.Map(stats.hunger, 0, 30, 1, 15);
+        downBias = ExtensionMethods.Map(stats.hunger, 0, 30, 1, 12);
 
         if (stats.hunger > 30)
         {
