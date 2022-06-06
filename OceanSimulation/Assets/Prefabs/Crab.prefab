@@ -101,7 +101,7 @@ MonoBehaviour:
   rotationSpeed: 2
   ageOfMaturity: 1
   ageOfDeath: 5
-  maxHunger: 1000
+  maxHunger: 10000
   deadMassPrefab: {fileID: 6846361565020064155, guid: 0999ad982c65e5742becd24786f97854,
     type: 3}
 --- !u!54 &4094648500147984914

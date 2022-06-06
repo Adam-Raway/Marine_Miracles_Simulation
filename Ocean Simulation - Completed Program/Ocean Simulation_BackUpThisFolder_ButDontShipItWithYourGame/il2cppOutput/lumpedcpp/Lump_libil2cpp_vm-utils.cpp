@@ -1,0 +1,6 @@
+#include "il2cpp-config.h"
+#include "D:\0 Imp Software\2019.4.38f1\Editor\Data\il2cpp\libil2cpp\vm-utils\BlobReader.cpp"
+#include "D:\0 Imp Software\2019.4.38f1\Editor\Data\il2cpp\libil2cpp\vm-utils\Debugger.cpp"
+#include "D:\0 Imp Software\2019.4.38f1\Editor\Data\il2cpp\libil2cpp\vm-utils\NativeDelegateMethodCache.cpp"
+#include "D:\0 Imp Software\2019.4.38f1\Editor\Data\il2cpp\libil2cpp\vm-utils\NativeSymbol.cpp"
+#include "D:\0 Imp Software\2019.4.38f1\Editor\Data\il2cpp\libil2cpp\vm-utils\VmStringUtils.cpp"
